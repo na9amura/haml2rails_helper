@@ -37,7 +37,7 @@ def convert_a_tag(line)
     if link_item.empty?
       text << "= link_to '#{ options[:href] }' do"
     else
-      text << "= link_to '#{ link_item.strip }', '#{ options[:href] }'"
+      text << "= link_to '#{ gsub_to_empty(link_item, /> /).strip }', '#{ options[:href] }'"
     end
     text << ", class: '#{ classes.gsub(/\./, ' ') }'"  unless classes.empty?
   end
