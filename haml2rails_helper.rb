@@ -56,7 +56,10 @@ def gsub_to_empty(base, *matchers)
   matchers.inject(base) { |a, e| a = a.gsub(e, '') }
 end
 
-puts 'arguments error'; exit if ARGV.length != 2
+if ARGV.length != 2
+  puts 'arguments error'
+  exit
+end
 input_path = ARGV[0]
 output_path = ARGV[1]
 
