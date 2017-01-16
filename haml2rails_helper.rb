@@ -16,7 +16,13 @@ def convert_img_tag(line)
 
   ''.tap do |text|
     text << "= image_tag '#{ options[:src] }'"
-    text << ", size: '#{ options[:width] }x#{ options[:height] }'"
+    if options.key?(:width) && options.key?(:height)
+      text << ", size: '#{ options[:width] }x#{ options[:height] }'"
+    elsif options.key?(:width)
+      text << ", width: '#{ options[:width] }"
+    elsif options.key?(:height)
+      text << ", height: '#{ options[:height] }'" 
+    end
     text << ", class: '#{ classes.gsub(/\./, ' ') }'"  unless classes.empty?
     text << ", alt: '#{ options[:alt] }'" if options.key?(:alt) && !options[:alt].empty?
   end
@@ -49,6 +55,7 @@ end
 
 def extract_options(line, *matchers)
   attrs = gsub_to_empty(line, *matchers)
+  attrs.gsub!(/([^=])>/, '\1')
   eval(attrs.to_s)
 end
 
